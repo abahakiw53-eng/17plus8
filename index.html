@@ -1,11 +1,9 @@
-
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Duotone Color Palette Converter - Dark</title>
+    <title>17+8 Tuntutan Rakyat</title>
     <style>
         * {
             margin: 0;
@@ -26,7 +24,8 @@
             min-height: 100vh;
             max-width: 100%;
             position: relative;
-            padding-bottom: 80px;
+            /* [FIX] Menambah padding bawah agar gambar tidak terhalang panel kontrol di mobile */
+            padding-bottom: 240px; 
             border: 1px solid rgba(254, 134, 196, 0.1);
         }
 
@@ -36,10 +35,8 @@
             color: white;
             text-align: center;
             box-shadow: 0 2px 20px rgba(254, 134, 196, 0.3);
-            position: sticky;
-            top: 0;
-            z-index: 100;
             border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            /* [FIX] Menghapus properti sticky agar header tidak melayang */
         }
 
         .header h1 {
@@ -57,6 +54,7 @@
 
         .color-preview {
             display: flex;
+            flex-wrap: wrap; 
             gap: 12px;
             padding: 16px;
             background: rgba(15, 15, 15, 0.8);
@@ -66,6 +64,7 @@
 
         .color-chip {
             flex: 1;
+            min-width: 150px;
             max-width: 160px;
             background: rgba(30, 30, 30, 0.9);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -178,7 +177,8 @@
             padding: 4px;
             margin-bottom: 16px;
             position: sticky;
-            top: 70px;
+            /* [FIX] Mengubah posisi top karena header tidak lagi sticky */
+            top: 10px; 
             z-index: 90;
             backdrop-filter: blur(10px);
         }
@@ -236,16 +236,19 @@
             background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
             border-top: 1px solid rgba(254, 134, 196, 0.2);
             padding: 16px;
-            display: none;
             z-index: 200;
             box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(20px);
+            transform: translateY(100%); 
+            transition: transform 0.3s ease-in-out; 
+            display: none;
         }
 
         .controls-panel.active {
             display: block;
+            transform: translateY(0); 
         }
-
+        
         .slider-group {
             margin-bottom: 16px;
         }
@@ -383,12 +386,11 @@
         @media (min-width: 768px) {
             .app-container {
                 max-width: 768px;
-                margin: 0 auto;
+                margin: 20px auto;
                 box-shadow: 0 0 40px rgba(254, 134, 196, 0.2);
                 border-radius: 20px;
-                margin-top: 20px;
-                margin-bottom: 20px;
                 min-height: calc(100vh - 40px);
+                padding-bottom: 32px; /* Reset padding untuk desktop */
             }
 
             .header {
@@ -417,6 +419,8 @@
                 box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
                 margin-top: 20px;
                 border: 1px solid rgba(255, 255, 255, 0.1);
+                display: none; 
+                transform: none; 
             }
 
             .floating-toggle {
@@ -462,7 +466,6 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Glowing effects for dark theme */
         .color-chip:hover {
             box-shadow: 0 4px 16px rgba(254, 134, 196, 0.2);
             transform: translateY(-2px);
@@ -473,7 +476,6 @@
             transform: translateY(-2px);
         }
 
-        /* Background images dengan filter gelap */
         .bg-brave {
             background-image: url('https://blogger.googleusercontent.com/img/a/AVvXsEixhVftISDiI5Nump0J121cnz7yhaG0FsmOgCdbVj_3dLrdkVA3ZvvvdVCpz0Giiq4nI6Kxt45XNJhkQ-bXajG94aRQM2X8-0VJO8PuEppVE-2jubcgcRnth-22ebNqjR1v4QFbtm3C-Tjzu0DBK4bygN5nmPNBOys9Bz5_2BLx8qaGRALtkvWx3Y-Bqz9P');
             background-repeat: no-repeat;
@@ -490,7 +492,6 @@
             filter: brightness(0.8) contrast(1.1);
         }
 
-        /* Pulsing animation for interactive elements */
         @keyframes pulse {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.8; }
@@ -504,7 +505,6 @@
             animation: pulse 3s ease-in-out infinite 1.5s;
         }
 
-        /* Scrollbar styling untuk dark theme */
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -521,29 +521,16 @@
         ::-webkit-scrollbar-thumb:hover {
             background: linear-gradient(135deg, #fe7db8 0%, #0b8549 100%);
         }
-.bg-brave {
-  background-image: url('https://blogger.googleusercontent.com/img/a/AVvXsEixhVftISDiI5Nump0J121cnz7yhaG0FsmOgCdbVj_3dLrdkVA3ZvvvdVCpz0Giiq4nI6Kxt45XNJhkQ-bXajG94aRQM2X8-0VJO8PuEppVE-2jubcgcRnth-22ebNqjR1v4QFbtm3C-Tjzu0DBK4bygN5nmPNBOys9Bz5_2BLx8qaGRALtkvWx3Y-Bqz9P');
-  background-repeat: no-repeat;   /* agar tidak berulang */
-  background-position: center;    /* posisi di tengah */
-  background-size: cover;         /* memenuhi layar, menjaga rasio */
-}
-.bg-hero {
-  background-image: url('https://blogger.googleusercontent.com/img/a/AVvXsEjMvoNCirrG1qyqEYA1Fs679T-AQUhXBoWwfy6RhkUojK5zZNQ9KNREXZ82E-fI3nCGJNfjRNYO3DWrqvixKmkZMz5MKV-suo_lAgU1PA9X8zeXHqkzZGCPn_2vxe9MNbsj1V8LwjvTSK4pfE-dOCw7UdW5b5PHTTEmoyL_GxZBZWjypFFBBTjoo0IXxhZH');
-  background-repeat: no-repeat;   /* agar tidak berulang */
-  background-position: center;    /* posisi di tengah */
-  background-size: cover;         /* memenuhi layar, menjaga rasio */
-}
-
     </style>
 </head>
 <body>
     <div class="app-container">
-        <div class="header">
+        <header class="header">
             <h1>17+8</h1>
             <p>Tuntutan Rakyat</p>
-        </div>
+        </header>
 
-        <div class="color-preview">
+        <section class="color-preview">
             <div class="color-chip">
                 <div class="color-dot bg-brave" style="background-color: #FE86C4;"></div>
                 <div class="color-info">
@@ -558,19 +545,19 @@
                     <div class="color-code">#0D9A55</div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div class="upload-section">
+        <section class="upload-section">
             <button class="upload-button" id="uploadBtn">
                 <span class="icon">📸</span>
                 <span>Pilih Foto</span>
             </button>
             <div class="upload-hint">Format: JPG, PNG, GIF • Max 10MB</div>
-        </div>
+        </section>
 
         <input type="file" id="fileInput" accept="image/*">
 
-        <div class="image-viewer" id="imageViewer">
+        <main class="image-viewer" id="imageViewer">
             <div class="tab-container" id="tabContainer">
                 <button class="tab-button active" data-tab="original">Original</button>
                 <button class="tab-button" data-tab="result">Hasil</button>
@@ -586,9 +573,9 @@
                     <canvas id="resultCanvas"></canvas>
                 </div>
             </div>
-        </div>
+        </main>
 
-        <div class="controls-panel" id="controlsPanel">
+        <aside class="controls-panel" id="controlsPanel">
             <div class="slider-group">
                 <div class="slider-header">
                     <span class="slider-label">Intensitas</span>
@@ -613,7 +600,7 @@
                     💾 Download
                 </button>
             </div>
-        </div>
+        </aside>
 
         <div class="floating-toggle" id="floatingToggle">
             ⚙️
@@ -641,11 +628,9 @@
         let currentImage = null;
         let originalImageData = null;
         
-        // Colors
         const brightColor = {r: 254, g: 134, b: 196}; // #FE86C4
         const darkColor = {r: 13, g: 154, b: 85}; // #0D9A55
 
-        // Mobile tab handling
         const tabButtons = document.querySelectorAll('.tab-button');
         const originalContainer = document.getElementById('originalContainer');
         const resultContainer = document.getElementById('resultContainer');
@@ -654,11 +639,9 @@
             button.addEventListener('click', () => {
                 const tab = button.dataset.tab;
                 
-                // Update active tab
                 tabButtons.forEach(btn => btn.classList.remove('active'));
                 button.classList.add('active');
                 
-                // Show corresponding container
                 if (tab === 'original') {
                     originalContainer.classList.add('active');
                     resultContainer.classList.remove('active');
@@ -669,82 +652,80 @@
             });
         });
 
-        // Upload button
-        uploadBtn.addEventListener('click', () => {
-            fileInput.click();
-        });
+        uploadBtn.addEventListener('click', () => fileInput.click());
 
-        // Floating toggle for controls
         floatingToggle.addEventListener('click', () => {
             controlsPanel.classList.toggle('active');
             floatingToggle.innerHTML = controlsPanel.classList.contains('active') ? '✕' : '⚙️';
         });
 
-        // File input change
         fileInput.addEventListener('change', (e) => {
             if (e.target.files.length > 0) {
                 handleImage(e.target.files[0]);
             }
         });
 
-        // Handle image
         function handleImage(file) {
-            // Check file size (10MB limit)
             if (file.size > 10 * 1024 * 1024) {
                 alert('File terlalu besar! Maksimal 10MB');
                 return;
             }
 
             const reader = new FileReader();
-            
             reader.onload = function(e) {
                 const img = new Image();
-                
                 img.onload = function() {
                     currentImage = img;
+                    drawImages();
                     
-                    // Set canvas dimensions
-                    const maxWidth = window.innerWidth < 768 ? window.innerWidth - 32 : 400;
-                    const maxHeight = window.innerHeight * 0.5;
-                    let width = img.width;
-                    let height = img.height;
-                    
-                    if (width > maxWidth || height > maxHeight) {
-                        const ratio = Math.min(maxWidth / width, maxHeight / height);
-                        width *= ratio;
-                        height *= ratio;
-                    }
-                    
-                    originalCanvas.width = width;
-                    originalCanvas.height = height;
-                    resultCanvas.width = width;
-                    resultCanvas.height = height;
-                    
-                    // Draw original
-                    originalCtx.drawImage(img, 0, 0, width, height);
-                    originalImageData = originalCtx.getImageData(0, 0, width, height);
-                    
-                    // Apply effect
-                    applyDuotone();
-                    
-                    // Show UI
                     imageViewer.classList.add('active');
                     controlsPanel.classList.add('active');
                     floatingToggle.classList.add('active');
                     
-                    // Switch to result tab on mobile
                     if (window.innerWidth < 768) {
                         tabButtons[1].click();
                     }
                 };
-                
                 img.src = e.target.result;
             };
-            
             reader.readAsDataURL(file);
         }
+        
+        function drawImages(){
+            if (!currentImage) return;
+            
+            const img = currentImage;
+            
+            const screenWidth = window.innerWidth;
+            const contentPadding = 32; 
+            const desktopMaxWidth = (768 - (32 * 2)) / 2 - 10;
+            let width = img.width;
+            let height = img.height;
+            
+            let maxWidth;
+            if (screenWidth >= 768){
+                maxWidth = desktopMaxWidth;
+            } else {
+                maxWidth = screenWidth - contentPadding;
+            }
 
-        // Apply duotone effect
+            if (width > maxWidth) {
+                const ratio = maxWidth / width;
+                width = maxWidth;
+                height *= ratio;
+            }
+            
+            originalCanvas.width = width;
+            originalCanvas.height = height;
+            resultCanvas.width = width;
+            resultCanvas.height = height;
+            
+            originalCtx.drawImage(img, 0, 0, width, height);
+            originalImageData = originalCtx.getImageData(0, 0, width, height);
+            
+            applyDuotone();
+        }
+
         function applyDuotone() {
             if (!originalImageData) return;
             
@@ -760,22 +741,16 @@
             const data = imageData.data;
             
             for (let i = 0; i < data.length; i += 4) {
-                // Convert to grayscale
                 let gray = data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114;
-                
-                // Apply contrast
                 gray = ((gray / 255 - 0.5) * contrast + 0.5) * 255;
                 gray = Math.max(0, Math.min(255, gray));
                 
-                // Normalize
                 const normalized = gray / 255;
                 
-                // Interpolate colors
                 const r = darkColor.r + (brightColor.r - darkColor.r) * normalized;
                 const g = darkColor.g + (brightColor.g - darkColor.g) * normalized;
                 const b = darkColor.b + (brightColor.b - darkColor.b) * normalized;
                 
-                // Mix with original
                 data[i] = data[i] * (1 - intensity) + r * intensity;
                 data[i + 1] = data[i + 1] * (1 - intensity) + g * intensity;
                 data[i + 2] = data[i + 2] * (1 - intensity) + b * intensity;
@@ -784,7 +759,6 @@
             resultCtx.putImageData(imageData, 0, 0);
         }
 
-        // Slider events
         intensitySlider.addEventListener('input', (e) => {
             intensityValue.textContent = e.target.value + '%';
             applyDuotone();
@@ -795,7 +769,6 @@
             applyDuotone();
         });
 
-        // Reset
         resetBtn.addEventListener('click', () => {
             intensitySlider.value = 100;
             contrastSlider.value = 100;
@@ -804,7 +777,6 @@
             applyDuotone();
         });
 
-        // Download
         downloadBtn.addEventListener('click', () => {
             const link = document.createElement('a');
             link.download = 'duotone-dark-' + Date.now() + '.png';
@@ -812,35 +784,37 @@
             link.click();
         });
 
-        // Handle resize
         let resizeTimer;
         window.addEventListener('resize', () => {
             clearTimeout(resizeTimer);
             resizeTimer = setTimeout(() => {
                 if (currentImage) {
-                    handleImage(new File([fileInput.files[0]], fileInput.files[0].name));
+                    drawImages();
                 }
             }, 250);
         });
 
-        // Add subtle parallax effect on scroll
-        let ticking = false;
-        function updateParallax() {
-            const scrolled = window.pageYOffset;
-            const parallax = document.querySelector('.app-container');
-            const speed = scrolled * 0.1;
-            parallax.style.transform = `translateY(${speed}px)`;
-            ticking = false;
-        }
-
-        function requestTick() {
-            if (!ticking) {
-                requestAnimationFrame(updateParallax);
-                ticking = true;
+        if (window.innerWidth >= 768) {
+            let ticking = false;
+            
+            function updateParallax() {
+                const scrolled = window.pageYOffset;
+                const parallax = document.querySelector('.app-container');
+                if (parallax) {
+                   const speed = scrolled * 0.1;
+                   parallax.style.transform = `translateY(${speed}px)`;
+                }
+                ticking = false;
             }
-        }
 
-        window.addEventListener('scroll', requestTick);
+            function requestTick() {
+                if (!ticking) {
+                    requestAnimationFrame(updateParallax);
+                    ticking = true;
+                }
+            }
+            window.addEventListener('scroll', requestTick);
+        }
     </script>
 </body>
 </html>
