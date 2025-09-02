@@ -219,7 +219,6 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
         
-        /* [BARU] Style untuk instruksi download */
         .download-instruction {
             color: #e0e0e0;
             text-align: center;
@@ -322,13 +321,13 @@
         }
 
         .action-buttons {
-            display: flex;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 12px;
             margin-top: 20px;
         }
 
         .btn {
-            flex: 1;
             padding: 12px;
             border: none;
             border-radius: 10px;
@@ -336,6 +335,11 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .btn-full-width {
+            grid-column: 1 / -1;
         }
 
         .btn-secondary {
@@ -549,7 +553,10 @@
                 <button class="btn btn-secondary" id="resetBtn">
                     🔄 Reset
                 </button>
-                <button class="btn btn-primary" id="downloadBtn">
+                <button class="btn btn-secondary" id="reverseColorsBtn">
+                     🎨 Balik Warna
+                </button>
+                <button class="btn btn-primary btn-full-width" id="downloadBtn">
                     💾 Siapkan untuk Download
                 </button>
             </div>
@@ -575,6 +582,7 @@
         const contrastValue = document.getElementById('contrastValue');
         const resetBtn = document.getElementById('resetBtn');
         const downloadBtn = document.getElementById('downloadBtn');
+        const reverseColorsBtn = document.getElementById('reverseColorsBtn'); // [BARU] Tombol baru
         
         const originalCtx = originalCanvas.getContext('2d');
         const resultCtx = resultCanvas.getContext('2d');
@@ -582,8 +590,9 @@
         let currentImage = null;
         let originalImageData = null;
         
-        const brightColor = {r: 254, g: 134, b: 196}; // #FE86C4
-        const darkColor = {r: 13, g: 154, b: 85}; // #0D9A55
+        // [MODIFIKASI] Gunakan let agar bisa diubah
+        let brightColor = {r: 254, g: 134, b: 196}; // #FE86C4
+        let darkColor = {r: 13, g: 154, b: 85};   // #0D9A55
 
         const tabContainer = document.getElementById('tabContainer');
         const tabButtons = document.querySelectorAll('.tab-button');
@@ -713,6 +722,15 @@
             
             resultCtx.putImageData(imageData, 0, 0);
         }
+        
+        // [BARU] Fungsi untuk membalikkan warna
+        reverseColorsBtn.addEventListener('click', () => {
+            // Tukar nilai antara brightColor dan darkColor
+            [brightColor, darkColor] = [darkColor, brightColor];
+            
+            // Terapkan kembali efek duotone dengan warna yang sudah dibalik
+            applyDuotone();
+        });
 
         intensitySlider.addEventListener('input', (e) => {
             intensityValue.textContent = e.target.value + '%';
@@ -729,45 +747,42 @@
             contrastSlider.value = 100;
             intensityValue.textContent = '100%';
             contrastValue.textContent = '100%';
+            
+            // Kembalikan ke warna default
+            brightColor = {r: 254, g: 134, b: 196};
+            darkColor = {r: 13, g: 154, b: 85};
+            
             applyDuotone();
         });
 
-        // [PERBAIKAN TOTAL] Logika download untuk kompatibilitas maksimal
         downloadBtn.addEventListener('click', () => {
-            // 1. Dapatkan data gambar dari canvas
             const dataURL = resultCanvas.toDataURL('image/png');
 
-            // 2. Buat elemen gambar baru
             const finalImage = new Image();
             finalImage.src = dataURL;
             finalImage.style.width = '100%';
             finalImage.style.height = 'auto';
-            finalImage.style.borderRadius = '16px 16px 0 0'; // Samakan dengan style container
+            finalImage.style.borderRadius = '16px 16px 0 0';
 
-            // 3. Buat elemen paragraf untuk instruksi
             const instruction = document.createElement('p');
             instruction.textContent = 'Tekan lama pada gambar di atas, lalu pilih "Simpan Gambar" atau "Unduh Gambar".';
             instruction.className = 'download-instruction';
 
-            // 4. Bersihkan kontainer hasil dan masukkan gambar serta instruksi
-            resultContainer.innerHTML = ''; // Hapus canvas dan judul sebelumnya
+            resultContainer.innerHTML = '';
             resultContainer.appendChild(finalImage);
             resultContainer.appendChild(instruction);
-            resultContainer.style.marginBottom = '0'; // Hapus margin bawah agar menyatu
+            resultContainer.style.marginBottom = '0';
 
-            // 5. Pastikan tab "Hasil" aktif
             if(window.innerWidth < 768) {
                 tabButtons[1].click();
             }
 
-            // 6. Sembunyikan semua elemen yang tidak diperlukan lagi
             controlsPanel.style.display = 'none';
             floatingToggle.style.display = 'none';
             originalContainer.style.display = 'none';
             tabContainer.style.display = 'none';
             uploadSection.style.display = 'none';
 
-            // Gulir ke atas agar pengguna langsung melihat gambar
             window.scrollTo(0, 0);
         });
 
