@@ -24,7 +24,6 @@
             min-height: 100vh;
             max-width: 100%;
             position: relative;
-            /* [FIX] Menambah padding bawah agar gambar tidak terhalang panel kontrol di mobile */
             padding-bottom: 240px; 
             border: 1px solid rgba(254, 134, 196, 0.1);
         }
@@ -36,7 +35,6 @@
             text-align: center;
             box-shadow: 0 2px 20px rgba(254, 134, 196, 0.3);
             border-bottom: 2px solid rgba(255, 255, 255, 0.1);
-            /* [FIX] Menghapus properti sticky agar header tidak melayang */
         }
 
         .header h1 {
@@ -177,7 +175,6 @@
             padding: 4px;
             margin-bottom: 16px;
             position: sticky;
-            /* [FIX] Mengubah posisi top karena header tidak lagi sticky */
             top: 10px; 
             z-index: 90;
             backdrop-filter: blur(10px);
@@ -220,6 +217,17 @@
             text-align: center;
             background: rgba(15, 15, 15, 0.8);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        /* [BARU] Style untuk instruksi download */
+        .download-instruction {
+            color: #e0e0e0;
+            text-align: center;
+            padding: 16px;
+            background-color: rgba(254, 134, 196, 0.1);
+            border-top: 1px solid rgba(254, 134, 196, 0.2);
+            border-radius: 0 0 16px 16px;
+            font-weight: 600;
         }
 
         canvas {
@@ -390,7 +398,7 @@
                 box-shadow: 0 0 40px rgba(254, 134, 196, 0.2);
                 border-radius: 20px;
                 min-height: calc(100vh - 40px);
-                padding-bottom: 32px; /* Reset padding untuk desktop */
+                padding-bottom: 32px;
             }
 
             .header {
@@ -451,76 +459,6 @@
                 display: block;
             }
         }
-
-        .loading-spinner {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-top-color: white;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .color-chip:hover {
-            box-shadow: 0 4px 16px rgba(254, 134, 196, 0.2);
-            transform: translateY(-2px);
-        }
-
-        .upload-button:hover {
-            box-shadow: 0 12px 28px rgba(254, 134, 196, 0.5);
-            transform: translateY(-2px);
-        }
-
-        .bg-brave {
-            background-image: url('https://blogger.googleusercontent.com/img/a/AVvXsEixhVftISDiI5Nump0J121cnz7yhaG0FsmOgCdbVj_3dLrdkVA3ZvvvdVCpz0Giiq4nI6Kxt45XNJhkQ-bXajG94aRQM2X8-0VJO8PuEppVE-2jubcgcRnth-22ebNqjR1v4QFbtm3C-Tjzu0DBK4bygN5nmPNBOys9Bz5_2BLx8qaGRALtkvWx3Y-Bqz9P');
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: cover;
-            filter: brightness(0.8) contrast(1.1);
-        }
-
-        .bg-hero {
-            background-image: url('https://blogger.googleusercontent.com/img/a/AVvXsEjMvoNCirrG1qyqEYA1Fs679T-AQUhXBoWwfy6RhkUojK5zZNQ9KNREXZ82E-fI3nCGJNfjRNYO3DWrqvixKmkZMz5MKV-suo_lAgU1PA9X8zeXHqkzZGCPn_2vxe9MNbsj1V8LwjvTSK4pfE-dOCw7UdW5b5PHTTEmoyL_GxZBZWjypFFBBTjoo0IXxhZH');
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: cover;
-            filter: brightness(0.8) contrast(1.1);
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
-        }
-
-        .color-chip:nth-child(1) {
-            animation: pulse 3s ease-in-out infinite;
-        }
-
-        .color-chip:nth-child(2) {
-            animation: pulse 3s ease-in-out infinite 1.5s;
-        }
-
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.2);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #FE86C4 0%, #0D9A55 100%);
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(135deg, #fe7db8 0%, #0b8549 100%);
-        }
     </style>
 </head>
 <body>
@@ -532,14 +470,14 @@
 
         <section class="color-preview">
             <div class="color-chip">
-                <div class="color-dot bg-brave" style="background-color: #FE86C4;"></div>
+                <div class="color-dot" style="background-color: #FE86C4;"></div>
                 <div class="color-info">
                     <div class="color-label">Brave Pink</div>
                     <div class="color-code">#FE86C4</div>
                 </div>
             </div>
             <div class="color-chip">
-                <div class="color-dot bg-hero" style="background-color: #0D9A55;"></div>
+                <div class="color-dot" style="background-color: #0D9A55;"></div>
                 <div class="color-info">
                     <div class="color-label">Hero Green</div>
                     <div class="color-code">#0D9A55</div>
@@ -547,7 +485,7 @@
             </div>
         </section>
 
-        <section class="upload-section">
+        <section class="upload-section" id="uploadSection">
             <button class="upload-button" id="uploadBtn">
                 <span class="icon">📸</span>
                 <span>Pilih Foto</span>
@@ -597,7 +535,7 @@
                     🔄 Reset
                 </button>
                 <button class="btn btn-primary" id="downloadBtn">
-                    💾 Download
+                    💾 Siapkan untuk Download
                 </button>
             </div>
         </aside>
@@ -610,6 +548,7 @@
     <script>
         const fileInput = document.getElementById('fileInput');
         const uploadBtn = document.getElementById('uploadBtn');
+        const uploadSection = document.getElementById('uploadSection');
         const originalCanvas = document.getElementById('originalCanvas');
         const resultCanvas = document.getElementById('resultCanvas');
         const imageViewer = document.getElementById('imageViewer');
@@ -631,6 +570,7 @@
         const brightColor = {r: 254, g: 134, b: 196}; // #FE86C4
         const darkColor = {r: 13, g: 154, b: 85}; // #0D9A55
 
+        const tabContainer = document.getElementById('tabContainer');
         const tabButtons = document.querySelectorAll('.tab-button');
         const originalContainer = document.getElementById('originalContainer');
         const resultContainer = document.getElementById('resultContainer');
@@ -777,11 +717,43 @@
             applyDuotone();
         });
 
+        // [PERBAIKAN TOTAL] Logika download untuk kompatibilitas maksimal
         downloadBtn.addEventListener('click', () => {
-            const link = document.createElement('a');
-            link.download = 'duotone-dark-' + Date.now() + '.png';
-            link.href = resultCanvas.toDataURL();
-            link.click();
+            // 1. Dapatkan data gambar dari canvas
+            const dataURL = resultCanvas.toDataURL('image/png');
+
+            // 2. Buat elemen gambar baru
+            const finalImage = new Image();
+            finalImage.src = dataURL;
+            finalImage.style.width = '100%';
+            finalImage.style.height = 'auto';
+            finalImage.style.borderRadius = '16px 16px 0 0'; // Samakan dengan style container
+
+            // 3. Buat elemen paragraf untuk instruksi
+            const instruction = document.createElement('p');
+            instruction.textContent = 'Tekan lama pada gambar di atas, lalu pilih "Simpan Gambar" atau "Unduh Gambar".';
+            instruction.className = 'download-instruction';
+
+            // 4. Bersihkan kontainer hasil dan masukkan gambar serta instruksi
+            resultContainer.innerHTML = ''; // Hapus canvas dan judul sebelumnya
+            resultContainer.appendChild(finalImage);
+            resultContainer.appendChild(instruction);
+            resultContainer.style.marginBottom = '0'; // Hapus margin bawah agar menyatu
+
+            // 5. Pastikan tab "Hasil" aktif
+            if(window.innerWidth < 768) {
+                tabButtons[1].click();
+            }
+
+            // 6. Sembunyikan semua elemen yang tidak diperlukan lagi
+            controlsPanel.style.display = 'none';
+            floatingToggle.style.display = 'none';
+            originalContainer.style.display = 'none';
+            tabContainer.style.display = 'none';
+            uploadSection.style.display = 'none';
+
+            // Gulir ke atas agar pengguna langsung melihat gambar
+            window.scrollTo(0, 0);
         });
 
         let resizeTimer;
@@ -793,28 +765,6 @@
                 }
             }, 250);
         });
-
-        if (window.innerWidth >= 768) {
-            let ticking = false;
-            
-            function updateParallax() {
-                const scrolled = window.pageYOffset;
-                const parallax = document.querySelector('.app-container');
-                if (parallax) {
-                   const speed = scrolled * 0.1;
-                   parallax.style.transform = `translateY(${speed}px)`;
-                }
-                ticking = false;
-            }
-
-            function requestTick() {
-                if (!ticking) {
-                    requestAnimationFrame(updateParallax);
-                    ticking = true;
-                }
-            }
-            window.addEventListener('scroll', requestTick);
-        }
     </script>
 </body>
 </html>
