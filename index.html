@@ -777,12 +777,39 @@
             applyDuotone();
         });
 
+        // [PERBAIKAN] Logika tombol download diubah agar kompatibel dengan Instagram browser
         downloadBtn.addEventListener('click', () => {
-            const link = document.createElement('a');
-            link.download = 'duotone-dark-' + Date.now() + '.png';
-            link.href = resultCanvas.toDataURL();
-            link.click();
+            try {
+                // Coba metode modern (toBlob) yang lebih efisien
+                resultCanvas.toBlob(function(blob) {
+                    if (blob) {
+                        const url = URL.createObjectURL(blob);
+                        // Buka di tab baru, di mana pengguna bisa menyimpan gambar secara manual
+                        const newTab = window.open(url, '_blank');
+                        if (!newTab) {
+                            // Jika pop-up diblokir, gunakan metode fallback
+                            throw new Error('Popup blocked');
+                        }
+                        // Hapus object URL setelah beberapa saat untuk menghindari memory leak
+                        setTimeout(() => URL.revokeObjectURL(url), 10000);
+                    } else {
+                        // Jika toBlob menghasilkan null, gunakan metode fallback
+                        throw new Error('Blob creation failed');
+                    }
+                }, 'image/png');
+            } catch (e) {
+                // Fallback: Gunakan toDataURL jika toBlob gagal atau diblokir
+                console.error("Download failed, using fallback:", e.message);
+                const dataURL = resultCanvas.toDataURL('image/png');
+                const newTab = window.open();
+                if (newTab) {
+                    newTab.document.write(`<img src="${dataURL}" style="width:100%;">`);
+                } else {
+                    alert('Gagal membuka gambar. Mohon izinkan pop-up untuk situs ini.');
+                }
+            }
         });
+
 
         let resizeTimer;
         window.addEventListener('resize', () => {
